@@ -1,14 +1,8 @@
 #!/usr/bin/env bun
-/**
- * Build orchestration script for zed-bun-debugger-extension.
- *
- * Steps:
- *  1. Build the bridge (bundle with Bun's bundler, target=node, add shebang)
- *  2. Compile the Rust extension to WASM
- */
+// Build script: bundles bridge and compiles WASM extension.
 
 import { spawn } from "node:child_process";
-import { mkdirSync, existsSync } from "node:fs";
+import { mkdirSync, renameSync, chmodSync, copyFileSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = import.meta.dir + "/..";
@@ -39,7 +33,6 @@ async function buildBridge(): Promise<void> {
   const bridgeJs = join(BIN_DIR, "bridge.js");
   const bridgeBin = join(BIN_DIR, "bridge");
 
-  // Bundle bridge with Bun (target=node)
   await run("bun", [
     "build",
     "src/main.ts",
@@ -47,10 +40,8 @@ async function buildBridge(): Promise<void> {
     "--outfile=" + bridgeJs,
   ], join(ROOT, "bridge"));
 
-  // Make executable (Bun already adds shebang with --target=node)
-  const fs = await import("node:fs");
-  fs.renameSync(bridgeJs, bridgeBin);
-  fs.chmodSync(bridgeBin, 0o755);
+  renameSync(bridgeJs, bridgeBin);
+  chmodSync(bridgeBin, 0o755);
 
   console.log("[build] Bridge built at", bridgeBin);
 }
@@ -63,11 +54,10 @@ async function buildWasm(): Promise<void> {
     "--release",
   ], EXTENSION_DIR);
 
-  const wasmSrc = join(EXTENSION_DIR, "target", "wasm32-wasip1", "release", "zed_bun_debugger.wasm");
-  const wasmDest = join(EXTENSION_DIR, "zed_bun_debugger.wasm");
+  const wasmSrc = join(EXTENSION_DIR, "target", "wasm32-wasip1", "release", "bun_debugger.wasm");
+  const wasmDest = join(EXTENSION_DIR, "bun_debugger.wasm");
 
-  const fs = await import("node:fs");
-  fs.copyFileSync(wasmSrc, wasmDest);
+  copyFileSync(wasmSrc, wasmDest);
   console.log("[build] WASM built at", wasmDest);
 }
 

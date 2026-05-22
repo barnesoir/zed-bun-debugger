@@ -1,6 +1,4 @@
-/**
- * Unit tests for bridge DAP framing
- */
+// Unit tests for DAP framing.
 
 import { describe, it, expect } from "bun:test";
 import { encodeDAP, decodeDAP } from "../bridge/src/types.ts";

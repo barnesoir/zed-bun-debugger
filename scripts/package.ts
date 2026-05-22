@@ -1,10 +1,8 @@
 #!/usr/bin/env bun
-/**
- * Package script: create a distributable archive of the Zed extension.
- */
+// Package script: create a distributable archive of the extension.
 
 import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, cpSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = import.meta.dir + "/..";
@@ -14,10 +12,9 @@ const OUT_DIR = join(ROOT, "dist");
 async function main(): Promise<void> {
   console.log("[package] Packaging extension...");
 
-  // Verify build artifacts exist
   const required = [
     join(EXTENSION_DIR, "extension.toml"),
-    join(EXTENSION_DIR, "zed_bun_debugger.wasm"),
+    join(EXTENSION_DIR, "bun_debugger.wasm"),
     join(EXTENSION_DIR, "bin/bridge"),
   ];
 
@@ -41,7 +38,6 @@ async function main(): Promise<void> {
 
   console.log(`[package] Created ${archivePath}`);
 
-  // Also create a plain directory copy for easy inspection
   const dirOut = join(OUT_DIR, archiveName);
   if (existsSync(dirOut)) {
     execSync(`rm -rf "${dirOut}"`);

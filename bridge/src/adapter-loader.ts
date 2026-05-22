@@ -1,7 +1,4 @@
-/**
- * Adapter loader that wraps the vendored Bun WebSocketDebugAdapter.
- * Handles lifecycle: launch, attach, event forwarding, and cleanup.
- */
+// Wraps the vendored Bun WebSocketDebugAdapter.
 
 import { WebSocketDebugAdapter, type DAP } from "../../vendor/bun-debug-adapter-protocol/index.ts";
 import type { DAPEvent, DAPRequest, DAPResponse } from "./types.ts";

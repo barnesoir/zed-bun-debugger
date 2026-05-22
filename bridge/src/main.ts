@@ -1,11 +1,5 @@
 #!/usr/bin/env node
-/**
- * Bun DAP Bridge — stdio server
- *
- * Reads DAP JSON-RPC from stdin (Content-Length protocol),
- * forwards to the vendored Bun WebSocketDebugAdapter,
- * and writes responses/events to stdout.
- */
+// Bun DAP Bridge — stdio server that proxies DAP to the Bun adapter.
 
 import { decodeDAP, encodeDAP, type DAPRequest, type DAPResponse, type DAPEvent } from "./types.ts";
 import { AdapterLoader } from "./adapter-loader.ts";
@@ -22,8 +16,6 @@ function log(...args: unknown[]): void {
 function sendDAP(msg: unknown): void {
   process.stdout.write(encodeDAP(msg));
 }
-
-// --- Main ---
 
 let buffer = Buffer.alloc(0);
 let adapter: AdapterLoader | null = new AdapterLoader(onEvent, onResponse);
@@ -64,7 +56,6 @@ process.stdin.on("data", (chunk: Buffer) => {
 
       if (request.command === "initialize") {
         initialized = true;
-        // Ensure the adapter knows we support configurationDone
         const modifiedRequest = {
           ...request,
           arguments: {
@@ -105,7 +96,6 @@ process.stdin.on("data", (chunk: Buffer) => {
           adapter.dispose();
           adapter = null;
         }
-        // Send disconnect response if adapter didn't
         sendDAP({
           type: "response",
           seq: nextSeq(),
@@ -113,7 +103,6 @@ process.stdin.on("data", (chunk: Buffer) => {
           command: "disconnect",
           success: true,
         });
-        // Give time for final events then exit
         setTimeout(() => process.exit(0), 500);
         continue;
       }

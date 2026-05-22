@@ -6,7 +6,7 @@ Use this checklist when verifying the extension in Zed.
 
 - [ ] `bun run scripts/build.ts` completed successfully
 - [ ] `extension/bin/bridge` exists and is executable
-- [ ] `extension/zed_bun_debugger.wasm` exists
+- [ ] `extension/bun_debugger.wasm` exists
 
 ## Dev Extension Install
 

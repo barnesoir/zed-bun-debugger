@@ -1,6 +1,4 @@
-/**
- * DAP JSON-RPC framing types for stdio transport
- */
+// DAP JSON-RPC framing types for stdio transport.
 
 export interface DAPMessage {
   type: "request" | "response" | "event";
@@ -28,19 +26,12 @@ export interface DAPEvent extends DAPMessage {
   body?: unknown;
 }
 
-/**
- * Encode a DAP message with Content-Length header for stdio transport
- */
 export function encodeDAP(msg: unknown): string {
   const json = JSON.stringify(msg);
   const header = `Content-Length: ${Buffer.byteLength(json)}\r\n\r\n`;
   return header + json;
 }
 
-/**
- * Decode DAP messages from a buffer using Content-Length protocol.
- * Returns array of parsed messages and remaining unconsumed buffer.
- */
 export function decodeDAP(buffer: Buffer): { messages: (DAPRequest | DAPResponse | DAPEvent)[]; remaining: Buffer } {
   const messages: (DAPRequest | DAPResponse | DAPEvent)[] = [];
   let remaining = buffer;
@@ -52,7 +43,6 @@ export function decodeDAP(buffer: Buffer): { messages: (DAPRequest | DAPResponse
     const header = remaining.slice(0, headerEnd).toString("utf8");
     const lengthMatch = header.match(/Content-Length:\s*(\d+)/i);
     if (!lengthMatch) {
-      // Skip invalid header
       remaining = remaining.slice(headerEnd + 4);
       continue;
     }

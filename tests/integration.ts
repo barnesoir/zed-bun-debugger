@@ -1,10 +1,5 @@
 #!/usr/bin/env bun
-/**
- * Integration test: bridge initializes, launches Bun, handles disconnect.
- *
- * This spawns the bridge, sends initialize → launch → disconnect,
- * and verifies the DAP responses.
- */
+// Integration test: bridge initializes, launches Bun, handles disconnect.
 
 import { spawn } from "node:child_process";
 import { join } from "node:path";
