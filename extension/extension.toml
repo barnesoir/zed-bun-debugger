@@ -7,4 +7,4 @@ description = "Debug Bun applications via DAP bridge"
 repository = "https://github.com/barnesoir/zed-bun-debugger"
 
 [debug_adapters]
-bun-debug = { name = "Bun Debug", label = "Bun Debugger" }
+bun-debug = { name = "Bun Debug", label = "Bun Debugger", schema_path = "debug_adapter_schemas/bun-debug.json" }

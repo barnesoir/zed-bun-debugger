@@ -1,9 +1,11 @@
 # Rust build artifacts
 target/
 
-# WASM build artifacts (only current build should exist)
+# WASM build artifacts
 *.wasm
-!bun_debugger.wasm
+
+# Bridge binary (downloaded at runtime)
+bin/
 
 # Editor files
 .vscode/

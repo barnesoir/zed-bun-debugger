@@ -55,7 +55,7 @@ async function buildWasm(): Promise<void> {
   ], EXTENSION_DIR);
 
   const wasmSrc = join(EXTENSION_DIR, "target", "wasm32-wasip1", "release", "bun_debugger.wasm");
-  const wasmDest = join(EXTENSION_DIR, "bun_debugger.wasm");
+  const wasmDest = join(EXTENSION_DIR, "extension.wasm");
 
   copyFileSync(wasmSrc, wasmDest);
   console.log("[build] WASM built at", wasmDest);

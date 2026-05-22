@@ -1,7 +1,7 @@
 use zed_extension_api::{
-    register_extension, DebugAdapterBinary, DebugConfig, DebugRequest, DebugScenario,
-    Extension, StartDebuggingRequestArguments, StartDebuggingRequestArgumentsRequest,
-    Worktree,
+    download_file, make_file_executable, register_extension, DebugAdapterBinary, DebugConfig,
+    DebugRequest, DebugScenario, DownloadedFileType, Extension, StartDebuggingRequestArguments,
+    StartDebuggingRequestArgumentsRequest, Worktree,
 };
 
 struct BunDebuggerExtension;
@@ -15,12 +15,35 @@ impl Extension for BunDebuggerExtension {
         &mut self,
         _adapter_name: String,
         config: zed_extension_api::DebugTaskDefinition,
-        _user_provided_debug_adapter_path: Option<String>,
+        user_provided_debug_adapter_path: Option<String>,
         _worktree: &Worktree,
     ) -> zed_extension_api::Result<DebugAdapterBinary, String> {
-        let pwd = std::env::var("PWD").map_err(|e| format!("PWD not set: {}", e))?;
-        let bridge_path = std::path::PathBuf::from(pwd).join("bin/bridge");
-        let command = bridge_path.to_string_lossy().to_string();
+        let bridge_path = if let Some(path) = user_provided_debug_adapter_path {
+            path
+        } else {
+            let pwd = std::env::var("PWD").map_err(|e| format!("PWD not set: {}", e))?;
+            let extension_dir = std::path::PathBuf::from(&pwd);
+
+            let downloaded_bridge = extension_dir.join("bridge");
+            let dev_bridge = extension_dir.join("bin/bridge");
+
+            if downloaded_bridge.exists() {
+                downloaded_bridge.to_string_lossy().to_string()
+            } else if dev_bridge.exists() {
+                dev_bridge.to_string_lossy().to_string()
+            } else {
+                let version = "0.1.0";
+                let url = format!(
+                    "https://github.com/barnesoir/zed-bun-debugger/releases/download/v{}/bridge",
+                    version
+                );
+                download_file(&url, "bridge", DownloadedFileType::Uncompressed)
+                    .map_err(|e| format!("Failed to download bridge: {}", e))?;
+                make_file_executable("bridge")
+                    .map_err(|e| format!("Failed to make bridge executable: {}", e))?;
+                downloaded_bridge.to_string_lossy().to_string()
+            }
+        };
 
         let request_args = StartDebuggingRequestArguments {
             configuration: config.config,
@@ -28,7 +51,7 @@ impl Extension for BunDebuggerExtension {
         };
 
         Ok(DebugAdapterBinary {
-            command: Some(command),
+            command: Some(bridge_path),
             arguments: Vec::new(),
             envs: Vec::new(),
             cwd: None,
@@ -76,8 +99,8 @@ impl Extension for BunDebuggerExtension {
             }
         };
 
-        let config_string =
-            serde_json::to_string(&request).map_err(|e| format!("Failed to serialize config: {}", e))?;
+        let config_string = serde_json::to_string(&request)
+            .map_err(|e| format!("Failed to serialize config: {}", e))?;
 
         Ok(DebugScenario {
             label: config.label,
