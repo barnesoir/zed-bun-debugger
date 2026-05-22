@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "zed-bun-debugger",
+      "name": "bun-debugger",
       "devDependencies": {
         "@types/bun": "latest",
         "@types/node": "latest",

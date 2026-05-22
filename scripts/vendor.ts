@@ -1,8 +1,5 @@
 #!/usr/bin/env bun
-/**
- * Vendor script: clone Bun monorepo at a pinned tag and copy
- * bun-debug-adapter-protocol + bun-inspector-protocol into vendor/
- */
+// Clone Bun monorepo and extract vendored packages.
 
 import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, cpSync, rmSync } from "node:fs";

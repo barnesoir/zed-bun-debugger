@@ -1,10 +1,5 @@
 #!/usr/bin/env bun
-/**
- * Integration test: bridge handles bad launch gracefully.
- *
- * This verifies that if the runtime cannot be found, the bridge does not hang
- * and instead emits a termination event, allowing Zed to surface the failure.
- */
+// Test: bridge handles bad launch gracefully.
 
 import { spawn } from "node:child_process";
 import { join } from "node:path";

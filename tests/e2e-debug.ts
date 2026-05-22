@@ -1,7 +1,5 @@
 #!/usr/bin/env bun
-/**
- * E2E test: verifies bridge DAP protocol and complete debug flow including breakpoints.
- */
+// E2E test: bridge DAP protocol and debug flow including breakpoints.
 
 import { spawn } from "node:child_process";
 import { join } from "node:path";
