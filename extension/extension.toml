@@ -1,7 +1,7 @@
 id = "bun-debugger"
 name = "Bun Debugger"
 version = "0.1.0"
-schema_version = 2
+schema_version = 1
 authors = ["barnesoir <barnesoir@users.noreply.github.com>"]
 description = "Debug Bun applications via DAP bridge"
 repository = "https://github.com/barnesoir/zed-bun-debugger"
