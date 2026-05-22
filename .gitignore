@@ -1,6 +1,5 @@
 # Build artifacts
-extension/bin/
-bin/
+/bin/
 target/
 dist/
 *.wasm
