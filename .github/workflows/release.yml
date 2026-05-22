@@ -45,3 +45,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload "${{ github.event.release.tag_name }}" extension/bin/bridge
+  release-zed-extension:
+    runs-on: ubuntu-latest
+    needs: build-and-upload
+    steps:
+      - name: Bump Zed extension
+        uses: huacnlee/zed-extension-action@v2
+        with:
+          extension-name: bun-debugger
+          push-to: barnesoir/extensions
+        env:
+          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
