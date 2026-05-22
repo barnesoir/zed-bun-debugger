@@ -1,0 +1,10 @@
+id = "zed-bun-debugger"
+name = "Bun Debugger"
+version = "0.1.0"
+schema_version = 2
+authors = ["Zed Bun Debugger Team"]
+description = "Debug Bun applications via DAP bridge"
+repository = "https://github.com/barnesoir/zed-bun-debugger"
+
+[debug_adapters]
+bun-debug = { name = "Bun Debug", label = "Bun Debugger" }
