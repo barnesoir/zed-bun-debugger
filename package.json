@@ -7,6 +7,7 @@
     "bridge"
   ],
   "scripts": {
+    "sync": "bun run scripts/sync-to-work.ts",
     "vendor": "bun run scripts/vendor.ts",
     "build": "bun run scripts/build.ts",
     "build:bridge": "cd bridge && bun run build",

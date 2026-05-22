@@ -18,8 +18,9 @@ impl Extension for BunDebuggerExtension {
         _user_provided_debug_adapter_path: Option<String>,
         _worktree: &Worktree,
     ) -> zed_extension_api::Result<DebugAdapterBinary, String> {
-        let bridge_path = "bin/bridge".to_string();
-        let command = bridge_path;
+        let pwd = std::env::var("PWD").map_err(|e| format!("PWD not set: {}", e))?;
+        let bridge_path = std::path::PathBuf::from(pwd).join("bin/bridge");
+        let command = bridge_path.to_string_lossy().to_string();
 
         let request_args = StartDebuggingRequestArguments {
             configuration: config.config,
