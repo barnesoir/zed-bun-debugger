@@ -29,9 +29,9 @@ Bun Runtime (--inspect)
 
 ## Installation
 
-### Zed Extension Store (coming soon)
+### Zed Extension Store
 
-Once published, install via:
+Install via:
 
 ```
 Cmd+Shift+P → extensions: install extension → "Bun Debugger"

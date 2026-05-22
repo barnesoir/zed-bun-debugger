@@ -31,7 +31,7 @@ async function main(): Promise<void> {
 
   mkdirSync(OUT_DIR, { recursive: true });
 
-  const archiveName = `zed-bun-debugger-v0.1.0`;
+  const archiveName = `bun-debugger-v0.1.0`;
   const archivePath = join(OUT_DIR, `${archiveName}.tar.gz`);
 
   execSync(

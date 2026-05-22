@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Bun Debug Adapter Launch Configuration",
-  "description": "Configuration schema for debugging Bun applications with the zed-bun-debugger extension.",
+  "description": "Configuration schema for debugging Bun applications with the bun-debugger extension.",
   "type": "object",
   "required": ["program"],
   "properties": {

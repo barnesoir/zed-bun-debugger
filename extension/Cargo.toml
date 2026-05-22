@@ -1,5 +1,5 @@
 [package]
-name = "zed-bun-debugger"
+name = "bun-debugger"
 version = "0.1.0"
 edition = "2021"
 
