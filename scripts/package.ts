@@ -14,7 +14,7 @@ async function main(): Promise<void> {
 
   const required = [
     join(EXTENSION_DIR, "extension.toml"),
-    join(EXTENSION_DIR, "bun_debugger.wasm"),
+    join(EXTENSION_DIR, "extension.wasm"),
     join(EXTENSION_DIR, "bin/bridge"),
   ];
 

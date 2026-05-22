@@ -18,7 +18,7 @@ async function main(): Promise<void> {
   console.log("[verify] Checking build artifacts...");
 
   assertExists(join(ROOT, "extension/bin/bridge"), "Bridge executable");
-  assertExists(join(ROOT, "extension/bun_debugger.wasm"), "WASM extension");
+  assertExists(join(ROOT, "extension/extension.wasm"), "WASM extension");
   assertExists(join(ROOT, "extension/extension.toml"), "Extension manifest");
   assertExists(join(ROOT, "vendor/bun-debug-adapter-protocol/package.json"), "Vendored DAP adapter");
   assertExists(join(ROOT, "vendor/bun-inspector-protocol/package.json"), "Vendored inspector protocol");
