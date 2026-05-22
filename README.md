@@ -29,7 +29,7 @@ Bun Runtime (--inspect)
 
 ## Installation
 
-### Zed Extension Store
+### Zed Extension Store (coming soon 🤞)
 
 Install via:
 
